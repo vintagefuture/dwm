@@ -58,12 +58,16 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "termite", NULL };
+static const char *termcmd[]  = { "termite", "-t", "termite", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "alsa_output.pci-0000_0b_00.4.analog-stereo", "+5%",     NULL };
 static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "alsa_output.pci-0000_0b_00.4.analog-stereo", "-5%",     NULL };
 static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "alsa_output.pci-0000_0b_00.4.analog-stereo", "toggle",  NULL };
+static const char *playpause[] = { "/usr/bin/playerctl", "play-pause",  NULL };
+static const char *stop[] = { "/usr/bin/playerctl", "stop",  NULL };
+static const char *nexttrack[] = { "/usr/bin/playerctl", "next",  NULL };
+static const char *previoustrack[] = { "/usr/bin/playerctl", "previous",  NULL };
 
 //static const char *roficmd[] = { "rofi" "-show", "drun", NULL };
 
@@ -72,10 +76,14 @@ static Key keys[] = {
         { 0,                            0x1008FF11,spawn,          {.v = downvol } },
         { 0,                            0x1008FF12,spawn,          {.v = mutevol } },
         { 0,                            0x1008FF13,spawn,          {.v = upvol   } },
+        { 0,                            0x1008FF14,spawn,          {.v = playpause   } },
+        { 0,                            0x1008FF15,spawn,          {.v = stop   } },
+        { 0,                            0x1008FF17,spawn,          {.v = nexttrack   } },
+        { 0,                            0x1008FF16,spawn,          {.v = previoustrack   } },
 	{ MODKEY,                       XK_grave,  togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("rofi -show drun") },                        
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMD("thunar") },                        
-	{ MODKEY,                       XK_w,      spawn,          SHCMD("brave") },                        
+	{ MODKEY,                       XK_w,      spawn,          SHCMD("firefox") },                        
 	{ MODKEY,                       XK_x,      spawn,          SHCMD("arcolinux-logout") },                        
 	{ MODKEY,                       XK_v,      spawn,          SHCMD("pavucontrol") },                        
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
