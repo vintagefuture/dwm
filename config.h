@@ -1,4 +1,8 @@
+#include <X11/XF86keysym.h>
 /* See LICENSE file for copyright and license details. */
+/* backlight */
+static const char *brightnessup[] = { "xbacklight", "-inc" "5", NULL };
+static const char *brightnessdown[] = { "xbacklight", "-dec", "5", NULL };
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -58,12 +62,12 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "termite", "-t", "termite", NULL };
+static const char *termcmd[]  = { "urxvt", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
-static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
-static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",     NULL };
-static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
+static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "1", "+5%",     NULL };
+static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "1", "-5%",     NULL };
+static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "1", "toggle",  NULL };
 static const char *playpause[] = { "/usr/bin/playerctl", "play-pause",  NULL };
 static const char *stop[] = { "/usr/bin/playerctl", "stop",  NULL };
 static const char *nexttrack[] = { "/usr/bin/playerctl", "next",  NULL };
@@ -73,6 +77,8 @@ static const char *previoustrack[] = { "/usr/bin/playerctl", "previous",  NULL }
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
+	{ 0,                            XF86XK_MonBrightnessUp, spawn, {.v = brightnessup} },
+        { 0,                            XF86XK_MonBrightnessDown, spawn,                          {.v = brightnessdown} },
         { 0,                            0x1008FF11,spawn,          {.v = downvol } },
         { 0,                            0x1008FF12,spawn,          {.v = mutevol } },
         { 0,                            0x1008FF13,spawn,          {.v = upvol   } },
