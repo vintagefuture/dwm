@@ -1,8 +1,8 @@
-/* See LICENSE file for copyright and license details. */
+
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const unsigned int gappx     = 15;        /* gaps between windows */
+static const unsigned int gappx     = 5;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -58,7 +58,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "termite", "-t", "termite", NULL };
+static const char *termcmd[]  = { "urxvt", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
@@ -68,6 +68,8 @@ static const char *playpause[] = { "/usr/bin/playerctl", "play-pause",  NULL };
 static const char *stop[] = { "/usr/bin/playerctl", "stop",  NULL };
 static const char *nexttrack[] = { "/usr/bin/playerctl", "next",  NULL };
 static const char *previoustrack[] = { "/usr/bin/playerctl", "previous",  NULL };
+static const char *changewallpaper[] = { "nitrogen", "--set-zoom-fill", "--random", "/home/nedo/wallpapers3monitors", NULL };
+static const char *restorewallpaper[] = { "nitrogen", "--restore", NULL };
 
 //static const char *roficmd[] = { "rofi" "-show", "drun", NULL };
 
@@ -75,17 +77,21 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
         { 0,                            0x1008FF11,spawn,          {.v = downvol } },
         { 0,                            0x1008FF12,spawn,          {.v = mutevol } },
-        { 0,                            0x1008FF13,spawn,          {.v = upvol   } },
-        { 0,                            0x1008FF14,spawn,          {.v = playpause   } },
-        { 0,                            0x1008FF15,spawn,          {.v = stop   } },
-        { 0,                            0x1008FF17,spawn,          {.v = nexttrack   } },
-        { 0,                            0x1008FF16,spawn,          {.v = previoustrack   } },
+        { 0,                            0x1008FF13,spawn,          {.v = upvol } },
+        { 0,                            0x1008FF14,spawn,          {.v = playpause } },
+        { 0,                            0x1008FF15,spawn,          {.v = stop } },
+        { 0,                            0x1008FF17,spawn,          {.v = nexttrack } },
+        { 0,                            0x1008FF16,spawn,          {.v = previoustrack } },
+	{ Mod1Mask,                     XK_Right,  spawn,          {.v = changewallpaper } },
+	{ Mod1Mask,                     XK_Left ,  spawn,          {.v = restorewallpaper } },
 	{ MODKEY,                       XK_grave,  togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("rofi -show drun") },                        
+	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("xfce4-screenshooter -r") },                        
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMD("thunar") },                        
 	{ MODKEY,                       XK_w,      spawn,          SHCMD("firefox") },                        
 	{ MODKEY,                       XK_x,      spawn,          SHCMD("arcolinux-logout") },                        
-	{ MODKEY,                       XK_v,      spawn,          SHCMD("pavucontrol") },                        
+	{ MODKEY,                       0x1008FF13,spawn,          SHCMD("pavucontrol") },                        
+	{ MODKEY,                       XK_v,      spawn,          SHCMD("rofi -modi 'clipboard:greenclip print' -show clipboard -run-command '{cmd}'") },                        
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
