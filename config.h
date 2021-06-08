@@ -90,6 +90,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("rofi -show drun") },                        
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMD("thunar") },                        
 	{ MODKEY,                       XK_w,      spawn,          SHCMD("firefox") },                        
+	{ MODKEY|ShiftMask,             XK_w,      spawn,          SHCMD("firefox --private-window") },                        
 	{ MODKEY,                       XK_x,      spawn,          SHCMD("arcolinux-logout") },                        
 	{ MODKEY,                       XK_v,      spawn,          SHCMD("pavucontrol") },                        
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
