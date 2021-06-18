@@ -1,7 +1,7 @@
 #include <X11/XF86keysym.h>
 /* See LICENSE file for copyright and license details. */
 /* backlight */
-static const char *brightnessup[] = { "xbacklight", "-inc" "5", NULL };
+static const char *brightnessup[] = { "xbacklight", "-inc", "5", NULL };
 static const char *brightnessdown[] = { "xbacklight", "-dec", "5", NULL };
 
 /* appearance */
@@ -41,6 +41,8 @@ static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] 
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
+#include "fibonacci.c"
+
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
@@ -48,6 +50,8 @@ static const Layout layouts[] = {
 	{ "[M]",      monocle },
 	{ "|M|",      centeredmaster },
 	{ ">M>",      centeredfloatingmaster },
+	{ "[@]",      spiral },
+	{ "[\\]",      dwindle },
 };
 
 /* key definitions */
@@ -79,8 +83,8 @@ static const char *previoustrack[] = { "/usr/bin/playerctl", "previous",  NULL }
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ 0,                            XF86XK_MonBrightnessUp, spawn, {.v = brightnessup} },
-        { 0,                            XF86XK_MonBrightnessDown, spawn,                          {.v = brightnessdown} },
+	{ 0,                            0x1008FF02, spawn, {.v = brightnessup} },
+        { 0,                            0x1008FF03, spawn,                          {.v = brightnessdown} },
         { 0,                            0x1008FF11,spawn,          {.v = downvol } },
         { 0,                            0x1008FF12,spawn,          {.v = mutevol } },
         { 0,                            0x1008FF13,spawn,          {.v = upvol   } },
@@ -112,6 +116,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[4]} },
+	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[5]} },
+	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[6]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
