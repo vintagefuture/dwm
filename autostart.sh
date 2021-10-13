@@ -10,6 +10,7 @@ function run {
 run "picom -b --config /dev/null"
 run "nitrogen --set-zoom-fill --random /home/nedo/wallpapers3monitors"
 run "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
-run "dwmstatus 2>&1 >/dev/null &"
+#run "dwmstatus 2>&1 >/dev/null &"
 run "greenclip daemon"
 xrandr --output DisplayPort-0 --primary
+run "slstatus"
